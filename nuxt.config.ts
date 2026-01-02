@@ -13,4 +13,14 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'light',
   },
+
+  app: {
+    // Replace 'my-nuxt-site' with your repository name
+    baseURL: '/ai4dmrg/'
+  },
+  // Ensure the project is treated as a static site
+  ssr: true,
+  nitro: {
+    preset: 'github-pages'
+  }
 })
