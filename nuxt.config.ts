@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: '/ai4dmrg/',
-    buildAssetsDir: '_nuxt'
+    buildAssetsDir: '/ai4dmrg/_nuxt'
   },
   nitro: {
     preset: 'github-pages',
