@@ -1,16 +1,26 @@
 <script setup lang="ts">
 const itemsData = [
-  { title: "Machine Learning", color: "warning" },
-  { title: "LLM", color: "error" },
-  { title: "AI", color: "info" },
-  { title: "Operation Research", color: "success" },
-  { title: "Safety", color: "info" },
-  { title: "RAG", color: "error" },
-  { title: "Reinforcement Learning", color: "warning" },
+  // Category: Decision Science (success)
   { title: "Decision Making", color: "success" },
-  { title: "Optimization", color: "success" },
-  { title: "Game Theory", color: "neutral" },
-  { title: "Probabilistic Models", color: "neutral" }
+  { title: "Game Theory", color: "success" },
+  { title: "Multi-Agent Systems", color: "success" },
+  { title: "Operation Research", color: "success" },
+
+  // Category: Modern AI (error)
+  { title: "AI", color: "error" },
+  { title: "LLM", color: "error" },
+  { title: "RAG", color: "error" },
+
+  // Category: Learning Dynamics (warning)
+  { title: "Machine Learning", color: "warning" },
+  { title: "Reinforcement Learning", color: "warning" },
+
+  // Category: Foundations (neutral)
+  { title: "Probabilistic Models", color: "neutral" },
+  { title: "Optimization", color: "neutral" },
+
+  // Category: Alignment (info)
+  { title: "Safety", color: "info" }
 ];
 const grid = [];
 const rows = 3;
@@ -40,12 +50,13 @@ const items = itemsData.map((item, index) => {
 <template>
   <UPageCard
       title="AI4DM Reading Group"
-      description="A collaborative space for researchers and practitioners to discuss cutting-edge developments in AI for Decision Making..."
+      description="A collaborative forum dedicated to exploring the intersection of probabilistic modeling, optimization, and modern machine learning. We dive deep into peer-reviewed research and emerging trends in AI for Decision Making, bridging the gap between theoretical game theory and practical autonomous systems."
       orientation="horizontal"
       highlight
       highlight-color="neutral"
+      class="main-card"
   >
-    <div class="right-card relative w-full h-48 rounded-md p-4 overflow-visible">
+    <div class="right-card relative w-full h-50 rounded-md overflow-visible">
       <div
           v-for="(item, index) in items"
           :key="index"
@@ -65,15 +76,48 @@ const items = itemsData.map((item, index) => {
     </div>
 
     <div class="informations mt-4">
-      <div>Every week on Thursdays</div>
-      <div class="past-recordings text-sm text-gray-500">
-        Past recordings could be found on our YouTube channel
+      <div>Every week on Thursdays at 10:00 AM EDT</div>
+      <div class="past-recordings text-sm text-gray-500 flex items-center gap-2 flex-wrap">
+        Past recordings could be found on our
+        <UButton icon="i-lucide-youtube" size="md" color="error" variant="ghost">YouTube channel</UButton>
       </div>
     </div>
   </UPageCard>
 </template>
 
 <style scoped lang="postcss">
+.main-card {
+  position: relative;
+  overflow: hidden; /* Ensures the blur doesn't bleed outside the card corners */
+  z-index: 0;
+}
+
+.main-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  /* Your background image */
+  background-image: url("/bg/bg1.jpg");
+  background-size: cover;
+  background-position: center;
+
+  /* Adjust blur strength here */
+  filter: blur(100px);
+
+  /* Move it behind the content */
+  z-index: -1;
+
+  /* Optional: Darken or lighten the image if text is hard to read */
+  background-color: rgba(255, 255, 255, 0.1);
+  background-blend-mode: overlay;
+
+  /* Prevents white "halos" at the edges caused by the blur */
+  transform: scale(1.1);
+}
 .floating-badge {
   position: absolute;
   /* Set initial random position */

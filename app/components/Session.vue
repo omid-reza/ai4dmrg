@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+import {slugify} from "~~/utils/slugify";
 export interface SessionTime {
   id: string | number;
   date: string;
@@ -35,6 +35,7 @@ const TAG_COLORS: Record<string, string> = {
   'AI': 'primary',
   'Artificial intelligence': 'primary',
   'Safety': 'info',
+  'Reinforcement Learning': 'warning',
 };
 
 const getTagColor = (tag: string) => {
@@ -43,26 +44,28 @@ const getTagColor = (tag: string) => {
 
 </script>
 <template>
-  <UPageCard
-      :title="props.title"
-      :description="speakers"
-      orientation="horizontal"
-      spotlight
-      :spotlight-color="session_type_color"
-  >
-    <div class="flex flex-col gap-5">
-      <div class="flex justify-end">
-        <div class="text-xl font-medium">
-          <div class="flex justify-between gap-1">
-            <span class="text-gray-300">  {{ props.session_time.date }} </span>
-            <span class="text-gray-300">{{ props.session_time.startTime }}</span>
-            <span class="text-sm text-gray-600">{{ props.session_time.timezone }}</span>
+  <NuxtLink :to="`/sessions/${props.session_time.date}/${slugify(props.title)}`">
+    <UPageCard
+        :title="props.title"
+        :description="speakers"
+        orientation="horizontal"
+        spotlight
+        :spotlight-color="session_type_color"
+    >
+      <div class="flex flex-col gap-5">
+        <div class="flex justify-end">
+          <div class="text-xl font-medium">
+            <div class="flex justify-between gap-1">
+              <span class="text-gray-300">  {{ props.session_time.date }} </span>
+              <span class="text-gray-300">{{ props.session_time.startTime }}</span>
+              <span class="text-sm text-gray-600">{{ props.session_time.timezone }}</span>
+            </div>
           </div>
         </div>
+        <div class="flex justify-end gap-2">
+          <UBadge v-for="tag in props.tags" size="md" :color="getTagColor(tag)" variant="subtle" >{{ tag }}</UBadge>
+        </div>
       </div>
-      <div class="flex justify-end gap-2">
-        <UBadge v-for="tag in props.tags" size="md" :color="getTagColor(tag)" variant="subtle" >{{ tag }}</UBadge>
-      </div>
-    </div>
-  </UPageCard>
+    </UPageCard>
+  </NuxtLink>
 </template>

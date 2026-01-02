@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+
+// 1. Define your Interfaces
+export interface SessionTime {
+  date: string;
+  startTime: string;
+  timezone: string;
+}
+
 export interface EventItem {
   title: string;
   speakers: string[];
@@ -7,56 +16,33 @@ export interface EventItem {
   tags: string[];
 }
 
-const events: EventItem[] = [
-  {
-    title: "Scaling Agent Systems",
-    speakers: ["Yubin Kim"],
-    type: "paper",
-    session: {
-      date: "2025-02-25",
-      startTime: "10:00 AM",
-      timezone: "EDT",
-    },
-    tags: ["Machine Learning", "LLM"]
-  },
-  {
-    title: "Scaling Agent Systems",
-    speakers: ["Yubin Kim"],
-    type: "paper",
-    session: {
-      date: "2026-02-25",
-      startTime: "10:00 AM",
-      timezone: "EDT",
-    },
-    tags: ["Machine Learning", "LLM"]
-  },
-  {
-    title: "Future of AI Ethics",
-    speakers: ["Dr. Smith", "Sarah Chen"],
-    type: "academic",
-    session: {
-      date: "2026-03-12",
-      startTime: "2:00 PM",
-      timezone: "PDT"
-    },
-    tags: ["AI", "Research Operation"]
-  }
-];
+const events = ref<EventItem[]>([]);
 const now = new Date();
+
+onMounted(async () => {
+  try {
+    const response = await fetch('/sessions.json');
+    events.value = await response.json();
+  } catch (error) {
+    console.error("Failed to load events:", error);
+  }
+});
+
 const upcomingEvents = computed(() => {
-  return events.filter(event => {
+  return events.value.filter(event => {
     const eventDateTime = new Date(`${event.session.date} ${event.session.startTime}`);
     return eventDateTime > now;
   });
 });
 
 const pastEvents = computed(() => {
-  return events.filter(event => {
+  return events.value.filter(event => {
     const eventDateTime = new Date(`${event.session.date} ${event.session.startTime}`);
     return eventDateTime <= now;
   });
 });
 </script>
+
 <template>
   <div class="flex flex-col gap-3 ps-4 pe-4">
     <MainCard />
