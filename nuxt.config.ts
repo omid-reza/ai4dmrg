@@ -15,11 +15,13 @@ export default defineNuxtConfig({
   },
   app: {
     baseURL: '/ai4dmrg/',
-    buildAssetsDir: '/ai4dmrg/_nuxt'
+    buildAssetsDir: '/_nuxt/'
   },
   nitro: {
     preset: 'github-pages',
-    baseURL: '/ai4dmrg/'
+    output: {
+      publicDir: 'docs'
+    }
   },
   router: {
     options: {
