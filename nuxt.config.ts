@@ -14,10 +14,17 @@ export default defineNuxtConfig({
     preference: 'dark',
   },
   app: {
+    baseURL: '/ai4dmrg/',
+    buildAssetsDir: '_nuxt'
+  },
+  nitro: {
+    preset: 'github-pages',
     baseURL: '/ai4dmrg/'
   },
-  ssr: true,
-  nitro: {
-    preset: 'github-pages'
-  }
+  router: {
+    options: {
+      hashMode: false
+    }
+  },
+  ssr: true
 })
