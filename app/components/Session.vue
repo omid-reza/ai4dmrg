@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import slugify from 'slugify'
 export interface SessionTime {
   id: string | number;
   date: string;
