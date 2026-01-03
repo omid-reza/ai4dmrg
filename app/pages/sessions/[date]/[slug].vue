@@ -21,7 +21,7 @@ const route = useRoute();
 const { date, slug } = route.params;
 const events = ref<EventItem[]>([]);
 const currentEvent = ref<EventItem | null>(null);
-const seakerbio_is_expanded = ref(false);
+const seakerbio_is_expanded = ref(true);
 
 onMounted(async () => {
   try {
@@ -40,39 +40,60 @@ onMounted(async () => {
     title: currentEvent.value ? currentEvent.value.title : 'Event Not Found'
   });
 });
+
+const TAG_COLORS: Record<string, string> = {
+  'Machine Learning': 'warning',
+  'LLM': 'error',
+  'Research Operation': 'success',
+  'AI': 'primary',
+  'Artificial intelligence': 'primary',
+  'Safety': 'info',
+  'Reinforcement Learning': 'warning',
+};
+
+const getTagColor = (tag: string) => {
+  return TAG_COLORS[tag] || 'neutral';
+};
 </script>
 
 <template>
 <div class="ps-4 pe-4">
-  <UPageCard
-      v-if="currentEvent"
-      :title="currentEvent.title"
-      :description="currentEvent.description"
-      orientation="horizontal"
-      highlight
-      highlight-color="neutral"
-      class="main-card"
-  >
+  <UPageCard v-if="currentEvent" orientation="horizontal" highlight highlight-color="neutral" class="main-card">
+    <template #title>
+      <div class="flex items-center  justify-between gap-2">
+        <span>{{ currentEvent.title }}</span>
+        <UBadge :label="currentEvent.place" variant="subtle" size="sm" color="neutral" />
+      </div>
+    </template>
+    <template #description>
+      <div class="relative min-h-[4em]">
+        <transition name="expand" mode="out-in">
+          <div class="pt-4 text-sm text-gray-600 dark:text-gray-400" v-show="seakerbio_is_expanded">
+            {{ currentEvent.description }}
+          </div>
+      </transition>
+      </div>
+    </template>
     <div class="right-card relative w-full h-full rounded-md overflow-visible pe-4 ps-4">
       <div class="flex justify-between">
 <!--        TODO: Fix the speaker names-->
         <div>{{ currentEvent.speakers[0] }}</div>
-        <transition name="fade">
-          <UButton
-              color="gray"
-              variant="soft"
-              size="xs"
-              @click="seakerbio_is_expanded = !seakerbio_is_expanded"
-          >
-            {{ seakerbio_is_expanded ? 'Hide Bio' : 'View Bio' }}
+          <UButton color="gray" variant="soft" size="xs" @click="seakerbio_is_expanded = !seakerbio_is_expanded" >
+            {{ seakerbio_is_expanded ? 'Hide Bio and Description' : 'View Bio and Description' }}
           </UButton>
-        </transition>
       </div>
-      <transition name="fade">
-        <div v-if="seakerbio_is_expanded">
-          {{ currentEvent.speakersbio }}
+      <transition name="expand">
+        <div v-show="seakerbio_is_expanded" class="expand-container">
+          <div class="pt-4 text-sm text-gray-600 dark:text-gray-400">
+            {{ currentEvent.speakersbio }}
+          </div>
         </div>
       </transition>
+      <div>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <UBadge v-for="tag in currentEvent.tags" :key="tag" size="md" :color="getTagColor(tag)" variant="subtle" :label="tag" />
     </div>
   </UPageCard>
 </div>
@@ -81,7 +102,29 @@ onMounted(async () => {
 <style scoped lang="postcss">
 .main-card{
   background-image: url("/bg/bg1.jpg");
-  //filter: blur(100px);
-  //z-index: -1;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.expand-enter-active,
+.expand-leave-active {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 500px; /* Set to a value larger than your content */
+  overflow: hidden;
+}
+
+.expand-enter-from,
+.expand-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

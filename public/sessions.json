@@ -10,7 +10,8 @@
       "startTime": "10:00 AM",
       "timezone": "EDT"
     },
-    "tags": ["Machine Learning", "LLM", "RAG", "Reinforcement Learning"]
+    "tags": ["Machine Learning", "LLM", "RAG", "Reinforcement Learning"],
+    "place": "Online"
   },
   {
     "title": "Talk2",
@@ -23,6 +24,7 @@
       "startTime": "10:00 AM",
       "timezone": "EDT"
     },
-    "tags": ["Research Operation", "Reinforcement Learning"]
+    "tags": ["Research Operation", "Reinforcement Learning"],
+    "place": "Online"
   }
 ]
