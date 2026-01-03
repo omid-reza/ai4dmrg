@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {slugify} from "~~/utils/slugify";
+import slugify from 'slugify'
 export interface SessionTime {
   id: string | number;
   date: string;
@@ -44,7 +44,7 @@ const getTagColor = (tag: string) => {
 
 </script>
 <template>
-  <NuxtLink :to="`/sessions/${props.session_time.date}/${slugify(props.title)}`">
+  <NuxtLink :to="`/sessions/${props.session_time.date}/${useSlug(props.title)}`">
     <UPageCard
         :title="props.title"
         :description="speakers"
