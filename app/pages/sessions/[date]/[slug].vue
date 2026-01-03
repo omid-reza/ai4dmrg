@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import Tag from "~/components/Tag.vue";
 
 export interface SessionTime {
   date: string;
@@ -60,9 +61,9 @@ const getTagColor = (tag: string) => {
 <div class="ps-4 pe-4">
   <UPageCard v-if="currentEvent" orientation="horizontal" highlight highlight-color="neutral" class="main-card">
     <template #title>
-      <div class="flex items-center  justify-between gap-2">
-        <span>{{ currentEvent.title }}</span>
-        <UBadge :label="currentEvent.place" variant="subtle" size="sm" color="neutral" />
+      <div class="flex justify-between items-start">
+        <span class="flex-grow">{{ currentEvent.title }}</span>
+        <Tag size="sm" :tag="currentEvent.place" class="shrink-0 ml-4" />
       </div>
     </template>
     <template #description>
@@ -76,9 +77,8 @@ const getTagColor = (tag: string) => {
     </template>
     <div class="right-card relative w-full h-full rounded-md overflow-visible pe-4 ps-4">
       <div class="flex justify-between">
-<!--        TODO: Fix the speaker names-->
-        <div>{{ currentEvent.speakers[0] }}</div>
-          <UButton color="gray" variant="soft" size="xs" @click="seakerbio_is_expanded = !seakerbio_is_expanded" >
+        <div>{{ formatSpeakers(currentEvent.speakers) }}</div>
+          <UButton color="gray" variant="soft" size="xs" @click="seakerbio_is_expanded = !seakerbio_is_expanded" :icon="seakerbio_is_expanded ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down'">
             {{ seakerbio_is_expanded ? 'Hide Bio and Description' : 'View Bio and Description' }}
           </UButton>
       </div>
@@ -93,7 +93,7 @@ const getTagColor = (tag: string) => {
       </div>
     </div>
     <div class="flex flex-wrap gap-2 mt-4">
-      <UBadge v-for="tag in currentEvent.tags" :key="tag" size="md" :color="getTagColor(tag)" variant="subtle" :label="tag" />
+      <Tag v-for="tag in currentEvent.tags" size="md" :tag="tag" />
     </div>
   </UPageCard>
 </div>

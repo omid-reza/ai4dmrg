@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Tag from "~/components/Tag.vue";
+
 export interface SessionTime {
   id: string | number;
   date: string;
@@ -14,11 +16,6 @@ const props = defineProps<{
   tags: string[];
 }>();
 
-const speakers = computed(() => {
-  const label = props.speakers.length > 1 ? 'Speakers' : 'Speaker';
-  return `${label}: ${props.speakers.join(', ')}`;
-});
-
 const TYPE_MAP: Record<string, string> = {
   paper: 'warning',
   academic: 'error',
@@ -26,27 +23,12 @@ const TYPE_MAP: Record<string, string> = {
   community: 'success'
 };
 const session_type_color = computed(() => TYPE_MAP[props.type] || 'neutral');
-
-const TAG_COLORS: Record<string, string> = {
-  'Machine Learning': 'warning',
-  'LLM': 'error',
-  'Research Operation': 'success',
-  'AI': 'primary',
-  'Artificial intelligence': 'primary',
-  'Safety': 'info',
-  'Reinforcement Learning': 'warning',
-};
-
-const getTagColor = (tag: string) => {
-  return TAG_COLORS[tag] || 'neutral';
-};
-
 </script>
 <template>
   <NuxtLink :to="`/sessions/${props.session_time.date}/${useSlug(props.title)}`">
     <UPageCard
         :title="props.title"
-        :description="speakers"
+        :description="formatSpeakers(props.speakers)"
         orientation="horizontal"
         spotlight
         :spotlight-color="session_type_color"
@@ -62,7 +44,7 @@ const getTagColor = (tag: string) => {
           </div>
         </div>
         <div class="flex justify-end gap-2">
-          <UBadge v-for="tag in props.tags" size="md" :color="getTagColor(tag)" variant="subtle" >{{ tag }}</UBadge>
+          <Tag v-for="tag in props.tags" size="md" :tag="tag" />
         </div>
       </div>
     </UPageCard>
