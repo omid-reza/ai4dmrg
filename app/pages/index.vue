@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 
-// 1. Define your Interfaces
 export interface SessionTime {
   date: string;
   startTime: string;

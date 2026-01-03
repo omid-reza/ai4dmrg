@@ -5,9 +5,9 @@ useHead({
 
 useSeoMeta({
   title: 'AI4DMRG',
-  description: 'A minimalistic habit tracker application to track and manage your daily habits with ease',
+  description: '',
   ogTitle: 'AI4DMRG',
-  ogDescription: 'A minimalistic habit tracker application to track and manage your daily habits with ease',
+  ogDescription: '',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
   twitterCard: 'summary_large_image',
   ogImage: '/social-card.png',
