@@ -21,7 +21,7 @@ const now = new Date();
 
 onMounted(async () => {
   try {
-    const response = await fetch('/sessions.json');
+    const response = await fetch('./sessions.json');
     events.value = await response.json();
   } catch (error) {
     console.error("Failed to load events:", error);
