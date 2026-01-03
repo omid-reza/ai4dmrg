@@ -20,27 +20,27 @@ export interface EventItem {
 
 const route = useRoute();
 const { date, slug } = route.params;
-const events = ref<EventItem[]>([]);
-const currentEvent = ref<EventItem | null>(null);
-const seakerbio_is_expanded = ref(true);
 
-onMounted(async () => {
-  try {
-    const response = await fetch('../../sessions.json');
-    events.value = await response.json();
-    currentEvent.value = events.value.find(event => {
-      const dateMatches = event.session.date === date;
-      const eventSlug = useSlug(event.title);
-      const slugMatches = eventSlug === slug;
-      return dateMatches && slugMatches;
-    }) || null;
-  } catch (error) {
-    console.error("Failed to load events:", error);
+const { data: events } = await useFetch<EventItem[]>('../../sessions.json');
+
+const currentEvent = computed(() => {
+  if (!events.value || !Array.isArray(events.value)) {
+    return null;
   }
-  useHead({
-    title: currentEvent.value ? currentEvent.value.title : 'Event Not Found'
-  });
+  return events.value?.find(event => {
+    const dateMatches = event.session.date === date;
+    const eventSlug = useSlug(event.title);
+    return dateMatches && eventSlug === slug;
+  }) || null;
 });
+
+if (!currentEvent.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Event Not Found',
+    fatal: true
+  });
+}
 
 const TAG_COLORS: Record<string, string> = {
   'Machine Learning': 'warning',
