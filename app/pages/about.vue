@@ -1,29 +1,29 @@
 <script setup lang="ts">
 const people = [
   {
-    "name": "Omid Reza Heidari",
-    "description": "Omid Reza Heidari recieved his M.Sc. from Concordia University, under the supervision of Professor Yang Wang and Professor Xinxin Zuo. Prior to that, he concluded his undergraduate studies at Islamic Azad University. His area of interest includes Multimodal Vision-Language, Large Language Models, Multimodal AI Agents, and Reinforcement Learning.",
-    "image": "https://omid-reza.github.io/images/profile.jpg",
+    "name": "Yassine Yaakoubi",
+    "description": "Yassine Yaakoubian is an Assistant Professor at the Gina Cody School of Engineering and Computer Science at Concordia University leading a research group in AI for Decision Making (AI4DM). His research interests lie at the intersection of optimization, learning, and simulation techniques for large-scale, real-world decision-making.",
+    "image": "https://yaakoubi.github.io/images/Avatar.jpg",
   },
   {
     "name": "Omid Reza Heidari",
-    "description": "Omid Reza Heidari recieved his M.Sc. from Concordia University, under the supervision of Professor Yang Wang and Professor Xinxin Zuo. Prior to that, he concluded his undergraduate studies at Islamic Azad University. His area of interest includes Multimodal Vision-Language, Large Language Models, Multimodal AI Agents, and Reinforcement Learning.",
+    "description": "Omid Reza a PhD student at Concordia University supervised by Yassine Yaakoubi and Blake Richards. His area of interest includes Multimodal Vision-Language, Large Language Models, Multimodal AI Agents, and Reinforcement Learning.",
     "image": "https://omid-reza.github.io/images/profile.jpg",
   },
   {
-    "name": "Omid Reza Heidari",
-    "description": "Omid Reza Heidari recieved his M.Sc. from Concordia University, under the supervision of Professor Yang Wang and Professor Xinxin Zuo. Prior to that, he concluded his undergraduate studies at Islamic Azad University. His area of interest includes Multimodal Vision-Language, Large Language Models, Multimodal AI Agents, and Reinforcement Learning.",
-    "image": "https://omid-reza.github.io/images/profile.jpg",
+    "name": "Manar Hamed",
+    "description": "TBW",
+    "image": "https://mila.quebec/sites/default/themes/mila_v1/assets/images/member/no-picture-v3.jpg",
   },
   {
-    "name": "Omid Reza Heidari",
-    "description": "Omid Reza Heidari recieved his M.Sc. from Concordia University, under the supervision of Professor Yang Wang and Professor Xinxin Zuo. Prior to that, he concluded his undergraduate studies at Islamic Azad University. His area of interest includes Multimodal Vision-Language, Large Language Models, Multimodal AI Agents, and Reinforcement Learning.",
-    "image": "https://omid-reza.github.io/images/profile.jpg",
+    "name": "Diaa Azzam",
+    "description": "TBW",
+    "image": "https://mila.quebec/sites/default/themes/mila_v1/assets/images/member/no-picture-v3.jpg",
   },
   {
-    "name": "Omid Reza Heidari",
-    "description": "Omid Reza Heidari recieved his M.Sc. from Concordia University, under the supervision of Professor Yang Wang and Professor Xinxin Zuo. Prior to that, he concluded his undergraduate studies at Islamic Azad University. His area of interest includes Multimodal Vision-Language, Large Language Models, Multimodal AI Agents, and Reinforcement Learning.",
-    "image": "https://omid-reza.github.io/images/profile.jpg",
+    "name": "Mahmoud Khaled",
+    "description": "TBW",
+    "image": "https://mahmoud-khaled-a.github.io/images/profile.png",
   },
 ]
 </script>
@@ -37,7 +37,7 @@ const people = [
         orientation="vertical"
         reverse
     >
-      <img :src="person.image" :alt="'Image of ' + person.name" class="w-full h-auto object-cover rounded-sm" />
+      <img :src="person.image" :alt="'Image of ' + person.name" class="w-full h-100 object-cover object-top rounded-sm" />
     </UPageCard>
   </div>
 </template>

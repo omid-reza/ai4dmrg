@@ -8,8 +8,8 @@
     </NuxtLink>
     <div class="flex gap-2 justify-end">
       <UButton icon="i-lucide-newspaper" size="md" color="neutral" variant="soft">Subscribe to our Newsletter</UButton>
-      <UButton icon="i-lucide-user-check" size="md" color="neutral" variant="soft">Suggest a speaker</UButton>
-      <UButton class="title text-2xl font-semibold tracking-tight" icon="i-lucide-user" size="md" color="neutral" variant="soft" to="/about" label="About Us" />
+      <UButton icon="i-lucide-lightbulb" size="md" color="neutral" variant="soft">Suggest a speaker</UButton>
+      <UButton icon="i-lucide-user" size="md" color="neutral" variant="soft" to="/about" label="About Us" />
     </div>
   </div>
 </template>
