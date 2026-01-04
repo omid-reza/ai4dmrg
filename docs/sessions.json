@@ -11,7 +11,9 @@
       "timezone": "EDT"
     },
     "tags": ["Machine Learning", "LLM", "RAG", "Reinforcement Learning"],
-    "place": "Online"
+    "place": "Online",
+    "recording_link": "https://www.youtube.com/watch?v=G3yTqTRXc0c",
+    "join_link": "https://concordia-ca.zoom.us/j/"
   },
   {
     "title": "Talk2",
@@ -25,6 +27,9 @@
       "timezone": "EDT"
     },
     "tags": ["Research Operation", "Reinforcement Learning"],
-    "place": "Online"
+    "place": "Online",
+    "slides_link": "slides_link",
+    "paper_links": ["paper_link", "paper link2"],
+    "join_link": "https://concordia-ca.zoom.us/j/"
   }
 ]
