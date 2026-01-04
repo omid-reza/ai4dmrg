@@ -76,20 +76,12 @@ onMounted(async () => {
             <Tag v-for="tag in currentEvent.tags" size="md" :tag="tag" />
           </div>
           <div>
-            <UButton icon="i-lucide-calendar" size="md" color="neutral" variant="link" class="pointer-events-none">{{ currentEvent.session.date }}</UButton>
-            <UButton icon="i-lucide-clock" size="md" color="neutral" variant="link" class="pointer-events-none"> {{currentEvent.session.startTime}} {{ currentEvent.session.timezone }}</UButton>
-            <NuxtLink v-if="currentEvent.join_link && event_is_joinable && (currentEvent.place == 'Online' || currentEvent.place == 'Hybrid')" :to="currentEvent.join_link">
-              <UButton icon="i-lucide-video" size="md" color="neutral" variant="ghost" label="Join" />
-            </NuxtLink>
-            <NuxtLink v-if="currentEvent.recording_link" :to="currentEvent.recording_link">
-              <UButton icon="i-lucide-youtube" size="md" color="error" variant="ghost" label="Watch Recording" />
-            </NuxtLink>
-            <NuxtLink v-if="currentEvent.slides_link" :to="currentEvent.slides_link">
-              <UButton icon="i-garden-file-presentation-stroke-16" size="md" color="neutral" variant="ghost" label="Slides" />
-            </NuxtLink>
-            <NuxtLink v-for="paper_link in currentEvent.paper_links" :to="paper_link">
-              <UButton icon="i-academicons-arxiv" size="md" color="neutral" variant="ghost" label="Paper" />
-            </NuxtLink>
+            <UButton icon="i-lucide-calendar" size="md" color="neutral" variant="link" class="pointer-events-none" :label="currentEvent.session.date" />
+            <UButton icon="i-lucide-clock" size="md" color="neutral" variant="link" class="pointer-events-none" :label="currentEvent.session.startTime+' '+currentEvent.session.timezone" />
+            <UButton v-if="currentEvent.join_link && event_is_joinable && (currentEvent.place == 'Online' || currentEvent.place == 'Hybrid')" :to="currentEvent.join_link" icon="i-lucide-video" size="md" color="neutral" variant="ghost" label="Join" external />
+            <UButton icon="i-lucide-youtube" size="md" color="error" variant="ghost" label="Watch Recording" v-if="currentEvent.recording_link" :to="currentEvent.recording_link" external />
+            <UButton icon="i-garden-file-presentation-stroke-16" size="md" color="neutral" variant="ghost" label="Slides" v-if="currentEvent.slides_link" :to="currentEvent.slides_link" target="_blank" external />
+            <UButton v-for="paper_link in currentEvent.paper_links" :to="paper_link" icon="i-academicons-arxiv" size="md" color="neutral" variant="ghost" label="Paper" target="_blank" external/>
           </div>
         </div>
       </template>
