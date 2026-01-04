@@ -29,7 +29,7 @@
     "tags": ["Research Operation", "Reinforcement Learning"],
     "place": "Online",
     "slides_link": "slides_link",
-    "paper_links": ["paper_link", "paper link2"],
+    "paper_links": ["https://arxiv.org/pdf/2512.02696", "https://arxiv.org/pdf/2512.02696"],
     "join_link": "https://concordia-ca.zoom.us/j/"
   }
 ]

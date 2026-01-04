@@ -78,10 +78,18 @@ onMounted(async () => {
           <div>
             <UButton icon="i-lucide-calendar" size="md" color="neutral" variant="link" class="pointer-events-none">{{ currentEvent.session.date }}</UButton>
             <UButton icon="i-lucide-clock" size="md" color="neutral" variant="link" class="pointer-events-none"> {{currentEvent.session.startTime}} {{ currentEvent.session.timezone }}</UButton>
-            <UButton v-if="currentEvent.join_link && event_is_joinable && (currentEvent.place == 'Online' || currentEvent.place == 'Hybrid')" icon="i-lucide-video" size="md" color="neutral" variant="ghost" label="Join" />
-            <UButton v-if="currentEvent.recording_link" icon="i-lucide-youtube" size="md" color="error" variant="ghost" label="Watch Recording" />
-            <UButton v-if="currentEvent.slides_link" icon="i-garden-file-presentation-stroke-16" size="md" color="neutral" variant="ghost" label="Slides" />
-            <UButton v-for="paper in currentEvent.paper_links" icon="i-academicons-arxiv" size="md" color="neutral" variant="ghost" label="Paper" />
+            <NuxtLink v-if="currentEvent.join_link && event_is_joinable && (currentEvent.place == 'Online' || currentEvent.place == 'Hybrid')" :to="currentEvent.join_link">
+              <UButton icon="i-lucide-video" size="md" color="neutral" variant="ghost" label="Join" />
+            </NuxtLink>
+            <NuxtLink v-if="currentEvent.recording_link" :to="currentEvent.recording_link">
+              <UButton icon="i-lucide-youtube" size="md" color="error" variant="ghost" label="Watch Recording" />
+            </NuxtLink>
+            <NuxtLink v-if="currentEvent.slides_link" :to="currentEvent.slides_link">
+              <UButton icon="i-garden-file-presentation-stroke-16" size="md" color="neutral" variant="ghost" label="Slides" />
+            </NuxtLink>
+            <NuxtLink v-for="paper_link in currentEvent.paper_links" :to="paper_link">
+              <UButton icon="i-academicons-arxiv" size="md" color="neutral" variant="ghost" label="Paper" />
+            </NuxtLink>
           </div>
         </div>
       </template>
