@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import Tag from "~/components/Tag.vue";
 
 export interface SessionTime {
@@ -16,6 +15,7 @@ export interface EventItem {
   session: SessionTime;
   tags: string[];
   speakersbio: string;
+  place: string;
 }
 
 const route = useRoute();
@@ -23,6 +23,7 @@ const { date, slug } = route.params;
 const events = ref<EventItem[]>([]);
 const currentEvent = ref<EventItem | null>(null);
 const seakerbio_is_expanded = ref(true);
+const event_is_joinable = ref(false);
 
 onMounted(async () => {
   try {
@@ -34,6 +35,14 @@ onMounted(async () => {
       const slugMatches = eventSlug === slug;
       return dateMatches && slugMatches;
     }) || null;
+    if (currentEvent.value !== null) {
+      const { date } = currentEvent.value.session;
+      const eventDate = new Date(date);
+      const deadline = new Date();
+      deadline.setDate(deadline.getDate() + 2);
+      deadline.setHours(23, 59, 59, 59);
+      event_is_joinable.value = eventDate > deadline;
+    }
   } catch (error) {
     console.error("Failed to load events:", error);
   }
@@ -41,62 +50,57 @@ onMounted(async () => {
     title: currentEvent.value ? currentEvent.value.title : 'Event Not Found'
   });
 });
-
-const TAG_COLORS: Record<string, string> = {
-  'Machine Learning': 'warning',
-  'LLM': 'error',
-  'Research Operation': 'success',
-  'AI': 'primary',
-  'Artificial intelligence': 'primary',
-  'Safety': 'info',
-  'Reinforcement Learning': 'warning',
-};
-
-const getTagColor = (tag: string) => {
-  return TAG_COLORS[tag] || 'neutral';
-};
 </script>
 
 <template>
-<div class="ps-4 pe-4">
-  <UPageCard v-if="currentEvent" orientation="horizontal" highlight highlight-color="neutral" class="main-card">
-    <template #title>
-      <div class="flex justify-between items-start">
-        <span class="flex-grow">{{ currentEvent.title }}</span>
-        <Tag size="sm" :tag="currentEvent.place" class="shrink-0 ml-4" />
-      </div>
-    </template>
-    <template #description>
-      <div class="relative min-h-[4em]">
+  <div class="ps-4 pe-4">
+    <UPageCard v-if="currentEvent" orientation="horizontal" highlight highlight-color="neutral" class="main-card">
+      <template #title>
+        <div class="flex justify-between items-start">
+          <span class="flex-grow">{{ currentEvent.title }}</span>
+          <Tag size="sm" :tag="currentEvent.place" class="shrink-0 ml-4" />
+        </div>
+      </template>
+      <template #description>
         <transition name="expand" mode="out-in">
-          <div class="pt-4 text-sm text-gray-600 dark:text-gray-400" v-show="seakerbio_is_expanded">
-            {{ currentEvent.description }}
+          <div class="relative min-h-[4em]" v-show="seakerbio_is_expanded">
+              <div class="pt-4 text-sm text-gray-600 dark:text-gray-400">
+                {{ currentEvent.description }}
+              </div>
           </div>
-      </transition>
-      </div>
-    </template>
-    <div class="right-card relative w-full h-full rounded-md overflow-visible pe-4 ps-4">
-      <div class="flex justify-between">
-        <div>{{ formatSpeakers(currentEvent.speakers) }}</div>
+        </transition>
+      </template>
+      <template #footer>
+        <div class="flex flex-col justify-between gap-5">
+          <div class="flex items-center gap-3">
+            <Tag v-for="tag in currentEvent.tags" size="md" :tag="tag" />
+          </div>
+          <div>
+            <UButton icon="i-lucide-calendar" size="md" color="neutral" variant="link" class="pointer-events-none">{{ currentEvent.session.date }}</UButton>
+            <UButton icon="i-lucide-clock" size="md" color="neutral" variant="link" class="pointer-events-none"> {{currentEvent.session.startTime}} {{ currentEvent.session.timezone }}</UButton>
+            <UButton v-if="event_is_joinable && (currentEvent.place == 'Online' || currentEvent.place == 'Hybrid')" icon="i-lucide-video" size="md" color="neutral" variant="ghost">Join</UButton>
+          </div>
+        </div>
+      </template>
+      <div class="right-card relative w-full h-full rounded-md overflow-visible pe-4 ps-4">
+        <div class="flex justify-between">
+          <div>{{ formatSpeakers(currentEvent.speakers) }}</div>
           <UButton color="gray" variant="soft" size="xs" @click="seakerbio_is_expanded = !seakerbio_is_expanded" :icon="seakerbio_is_expanded ? 'i-lucide-arrow-up' : 'i-lucide-arrow-down'">
             {{ seakerbio_is_expanded ? 'Hide Bio and Description' : 'View Bio and Description' }}
           </UButton>
-      </div>
-      <transition name="expand">
-        <div v-show="seakerbio_is_expanded" class="expand-container">
-          <div class="pt-4 text-sm text-gray-600 dark:text-gray-400">
-            {{ currentEvent.speakersbio }}
-          </div>
         </div>
-      </transition>
-      <div>
+        <transition name="expand">
+          <div v-show="seakerbio_is_expanded" class="expand-container">
+            <div class="pt-4 text-sm text-gray-600 dark:text-gray-400">
+              {{ currentEvent.speakersbio }}
+            </div>
+          </div>
+        </transition>
+        <div>
+        </div>
       </div>
-    </div>
-    <div class="flex flex-wrap gap-2 mt-4">
-      <Tag v-for="tag in currentEvent.tags" size="md" :tag="tag" />
-    </div>
-  </UPageCard>
-</div>
+    </UPageCard>
+  </div>
 </template>
 
 <style scoped lang="postcss">
