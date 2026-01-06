@@ -21,8 +21,8 @@ const people = [
     "image": "https://mila.quebec/sites/default/themes/mila_v1/assets/images/member/no-picture-v3.jpg",
   },
   {
-    "name": "Mahmoud Khaled",
-    "description": "Mahmoud is a PhD student at Concordia University supervised by Yassine Yaakoubi.",
+    "name": "Mahmoud Khaled Abdelkader",
+    "description": "Mahmoud is a PhD student at Concordia University supervised by Yassine Yaakoubi. His research focuses on contextual optimization, a field that integrates machine learning with mathematical optimization to improve decision-making in uncertain, high-stakes environments.",
     "image": "https://mahmoud-khaled-a.github.io/images/profile.png",
   },
 ]
